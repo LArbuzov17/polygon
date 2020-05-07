@@ -5,7 +5,7 @@
     "allowImportExportEverywhere": false,
     "codeFrame": false
   },
-  "extends": ["airbnb", "prettier"],
+  "extends": ["airbnb", "prettier", "eslint:recommended", "plugin:react/recommended"],
   "env": {
     "browser": true,
     "jest": true
@@ -15,6 +15,13 @@
     "prefer-promise-reject-errors": ["off"],
     "react/jsx-filename-extension": ["off"],
     "react/prop-types": ["warn"],
-    "no-return-assign": ["off"]
+    "no-return-assign": ["off"],
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ]
   }
 }
