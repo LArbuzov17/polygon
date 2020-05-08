@@ -8,6 +8,8 @@
 
 `react-youtube` - тестовое приложение, написанное в рамках изучения [урока Владилена Минина](https://youtu.be/xJZa2_aldDs)
 
+`react-redux-saga` - приложение, в рамках которого изучается особенность реализации redux в рамках react + знакомство с saga
+
 ## Available Scripts
 
 In the project directory, you can run:
