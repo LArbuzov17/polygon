@@ -1,14 +1,24 @@
-import React from 'react';
+/* eslint-disable no-nested-ternary */
+import React, { useEffect } from 'react';
 import TodoList from './Todo/TodoList';
 import Context from './context';
 import AddTodo from './Todo/AddTodo';
+import Loader from './UI/Loader';
 
 function App() {
-  const [todos, setTodos] = React.useState([
-    { id: 1, completed: false, title: 'Первая тудушка' },
-    { id: 2, completed: true, title: 'Вторая тудушка' },
-    { id: 3, completed: false, title: 'Третья тудушка' },
-  ]);
+  const [todos, setTodos] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
+      .then((response) => response.json())
+      .then((todos) => {
+        setTimeout(() => {
+          setTodos(todos);
+          setLoading(false);
+        }, 2000);
+      });
+  }, []);
 
   function toggleTodo(id) {
     setTodos(
@@ -42,9 +52,10 @@ function App() {
       <div className="wrapper">
         <h1>Basic React Todo List</h1>
         <AddTodo onCreate={addTodo} />
+        {loading && <Loader />}
         {todos.length ? (
           <TodoList todos={todos} onToggle={toggleTodo} />
-        ) : (
+        ) : loading ? null : (
           <p>Todos list is empty</p>
         )}
       </div>
