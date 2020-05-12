@@ -6,14 +6,17 @@ function Post({ post }) {
   return (
     <div className="card">
       <div className="card-body">
-        <h5 className="card-title">Title here {post}</h5>
+        <h5 className="card-title">{post.title}</h5>
       </div>
     </div>
   );
 }
 
 Post.propTypes = {
-  post: PropTypes.number.isRequired,
+  post: PropTypes.shape({
+    title: PropTypes.string,
+    id: PropTypes.string,
+  }).isRequired,
 };
 
 export default Post;
