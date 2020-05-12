@@ -1,6 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 
-import { CREATE_POST, FETCH_POST, SHOW_LOADER, HIDE_LOADER, SHOW_ALERT, HIDE_ALERT } from './types';
+import {
+  CREATE_POST,
+  REQUEST_POSTS,
+  SHOW_LOADER,
+  HIDE_LOADER,
+  SHOW_ALERT,
+  HIDE_ALERT,
+} from './types';
 
 export function createPost(post) {
   return {
@@ -42,16 +49,7 @@ export function hideAlert() {
 }
 
 export function fetchPost() {
-  return async (dispatch) => {
-    try {
-      dispatch(showLoader());
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
-      const json = await response.json();
-      dispatch({ type: FETCH_POST, payload: json });
-      dispatch(hideLoader());
-    } catch (error) {
-      dispatch(showAlert('Ошибка при запросе данных'));
-      dispatch(hideLoader());
-    }
+  return {
+    type: REQUEST_POSTS,
   };
 }
