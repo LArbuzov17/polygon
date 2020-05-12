@@ -1,9 +1,12 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prefer-stateless-function */
 // Данный компонент реализован на классе для тренировки
+
 import React from 'react';
 import { connect } from 'react-redux';
-import { createPost } from '../redux/actions';
+import { createPost, showAlert } from '../redux/actions';
+import Alert from './Alert';
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -19,7 +22,7 @@ class PostForm extends React.Component {
 
     const { title } = this.state;
     if (!title.trim()) {
-      return;
+      return this.props.showAlert('Необходимо указать название поста');
     }
 
     const newPost = {
@@ -27,10 +30,9 @@ class PostForm extends React.Component {
       id: Date.now().toString(),
     };
 
-    // eslint-disable-next-line react/destructuring-assignment
     this.props.createPost(newPost);
 
-    this.setState({ title: '' });
+    return this.setState({ title: '' });
   };
 
   changeInputHandler = (event) => {
@@ -49,6 +51,7 @@ class PostForm extends React.Component {
 
     return (
       <form onSubmit={this.submitHandler}>
+        {this.props.alert && <Alert message={this.props.alert} />}
         <div className="form-group">
           <label htmlFor="title">Заголовок поста</label>
           <div className="row">
@@ -73,6 +76,11 @@ class PostForm extends React.Component {
 
 const mapDispatchToProps = {
   createPost,
+  showAlert,
 };
 
-export default connect(null, mapDispatchToProps)(PostForm);
+const mapStateToProps = (state) => ({
+  alert: state.app.alert,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm);
